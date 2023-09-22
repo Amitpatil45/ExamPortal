@@ -1,7 +1,6 @@
 package com.examportal.controller;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -37,20 +36,20 @@ public class QuestionController {
 	//add
 	@PostMapping("/")
 	public ResponseEntity<Question> add(@RequestBody Question question){
-		return ResponseEntity.ok(this.questionService.addQuestion(question));
+		return ResponseEntity.ok(questionService.addQuestion(question));
 		
 	}
 	
 	//update
 	@PutMapping("/")
 	public ResponseEntity<Question> update(@RequestBody Question question){
-		return ResponseEntity.ok(this.questionService.updateQuestion(question));
+		return ResponseEntity.ok(questionService.updateQuestion(question));
 	}
 	
 	//get
 	@GetMapping("/quiz/{qid}")
 	public ResponseEntity<?> questionsofquiz(@PathVariable ("qid") Long qid){
-		Quiz quiz = this.quizService.getQuiz(qid);
+		Quiz quiz = quizService.getQuiz(qid);
 		Set<Question> questions = quiz.getQuestions();
 		List list = new ArrayList(questions);
 		if(list.size()> Integer.parseInt(quiz.getNoOfQuestions())) {
@@ -65,12 +64,12 @@ public class QuestionController {
 	@GetMapping("/{qid}")
 	
 	public Question question(@PathVariable("qid") Long qid) {
-		return this.questionService.getQuestion(qid);
+		return questionService.getQuestion(qid);
 		
 	}
 	
 	@DeleteMapping("/{qid}")
 	public void delete(@PathVariable("qid") Long qid) {
-		this.questionService.deleteQuestion(qid);
+		questionService.deleteQuestion(qid);
 	}
 }

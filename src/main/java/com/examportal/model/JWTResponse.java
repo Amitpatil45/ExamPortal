@@ -1,7 +1,6 @@
 package com.examportal.model;
 
 public class JWTResponse {
-
 	private String token;
 	private String userName;
 	private String fName;
@@ -9,11 +8,9 @@ public class JWTResponse {
 	private String email;
 	private String phone;
 	private String profile;
-	
 
 	public JWTResponse() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public JWTResponse(String token, String userName, String fName, String lname, String email, String phone,
@@ -26,7 +23,7 @@ public class JWTResponse {
 		this.email = email;
 		this.phone = phone;
 		this.profile = profile;
-		
+
 	}
 
 	public String getToken() {
@@ -84,7 +81,5 @@ public class JWTResponse {
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
-
-	
 
 }

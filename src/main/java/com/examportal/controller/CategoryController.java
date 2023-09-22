@@ -1,7 +1,5 @@
 package com.examportal.controller;
 
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,7 +26,7 @@ public class CategoryController {
 	// add
 	@PostMapping("/")
 	public ResponseEntity<Category> addcategory(@RequestBody Category category) {
-		Category category1 = this.categoryService.addCategory(category);
+		Category category1 = categoryService.addCategory(category);
 		return ResponseEntity.ok(category1);
 
 	}
@@ -37,26 +35,26 @@ public class CategoryController {
 
 	@GetMapping("/{categoryId}")
 	public Category category(@PathVariable("categoryId") Long categoryId) {
-		return this.categoryService.getCategory(categoryId);
+		return categoryService.getCategory(categoryId);
 
 	}
 
 	@GetMapping("/")
 	public ResponseEntity<?> getCategories() {
-		return ResponseEntity.ok(this.categoryService.getCategories());
+		return ResponseEntity.ok(categoryService.getCategories());
 
 	}
 
 	// update
 	@PutMapping("/")
 	public Category updateCategory(@RequestBody Category category) {
-		return this.categoryService.updateCategory(category);
+		return categoryService.updateCategory(category);
 
 	}
 
 	@DeleteMapping("/{categoryId}")
 	public void deleteCategory(@PathVariable("categoryId") Long categoryId) {
-		this.categoryService.delete(categoryId);
+		categoryService.delete(categoryId);
 	}
 
 }

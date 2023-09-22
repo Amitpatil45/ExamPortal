@@ -19,40 +19,40 @@ import com.examportal.services.QuizService;
 @RequestMapping("/quiz")
 @CrossOrigin("*")
 public class QuizController {
-	
+
 	@Autowired
 	private QuizService quizService;
-	
-	//add
+
+	// add
 	@PostMapping("/")
-	public ResponseEntity<Quiz> add(@RequestBody Quiz quiz){
-		return ResponseEntity.ok(this.quizService.addQuiz(quiz));
-		
+	public ResponseEntity<Quiz> add(@RequestBody Quiz quiz) {
+		return ResponseEntity.ok(quizService.addQuiz(quiz));
+
 	}
-	
-	//update
+
+	// update
 	@PutMapping("/")
-	public ResponseEntity<Quiz> update(@RequestBody Quiz quiz){
-		return ResponseEntity.ok(this.quizService.updateQuiz(quiz));
-		
+	public ResponseEntity<Quiz> update(@RequestBody Quiz quiz) {
+		return ResponseEntity.ok(quizService.updateQuiz(quiz));
+
 	}
-	
-	//get
+
+	// get
 	@GetMapping("/")
-	public ResponseEntity<?> quizzes(){
-		return ResponseEntity.ok(this.quizService.getQuizzes());
-		
+	public ResponseEntity<?> quizzes() {
+		return ResponseEntity.ok(quizService.getQuizzes());
+
 	}
-	
+
 	@GetMapping("/{qid}")
 	public Quiz quiz(@PathVariable("qid") Long qid) {
-		return this.quizService.getQuiz(qid);
-		
+		return quizService.getQuiz(qid);
+
 	}
-	
+
 	@DeleteMapping("/{qid}")
 	public void delete(@PathVariable("qid") Long qid) {
-		this.quizService.deleteQuiz(qid);
+		quizService.deleteQuiz(qid);
 	}
 
 }
