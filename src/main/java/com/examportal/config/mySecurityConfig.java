@@ -25,6 +25,8 @@ public class mySecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private  JWTAuthenticationEntryPoint unAuthorizedHandler;
+    
+    
     @Autowired
     private  JWTAuthenticationFilter JWTAuthenticationFilter;
 
@@ -66,4 +68,6 @@ public class mySecurityConfig extends WebSecurityConfigurerAdapter {
                 addFilterBefore(JWTAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
+    
+   
 }
