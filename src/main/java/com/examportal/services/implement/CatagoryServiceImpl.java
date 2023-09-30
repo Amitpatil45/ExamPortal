@@ -1,9 +1,10 @@
 package com.examportal.services.implement;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.examportal.model.exam.Category;
@@ -17,6 +18,55 @@ public class CatagoryServiceImpl implements CategoryService {
 	
 
 	@Override
+	public Category addCategory(Category category) throws Exception {
+		if(category.getTitle() == null) {
+			throw new Exception("Please enter Tital");
+		}
+		
+		else if (category.getIsActive() == null) {
+			throw new Exception("Active it");
+		}
+		else {
+			
+		}
+		
+	
+		return categoryRepository.save(category );
+	}
+
+	@Override
+	public Category updateCategory(Category category) {
+		return categoryRepository.save(category);
+	}
+	@Override
+	public Page<Category> getCategories(int page, int size) {
+		
+		Pageable pageable1 =PageRequest.of(page, size);
+		
+		Page<Category> category ;
+		
+		category =  categoryRepository.findAll(pageable1);
+		return category;
+	}
+	
+
+	@Override
+	public Category getCategory(Long categoryId) {
+		return categoryRepository.findById(categoryId).get();
+	}
+
+	@Override
+	public Category updateStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	
+	
+
+	/*@Override
 	public Category addCategory(Category category) {
 		
 		return this.categoryRepository.save(category);
@@ -29,7 +79,7 @@ public class CatagoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Set<Category> getCategories() {
+	public List<Category> getCategories() {
 		
 		return new LinkedHashSet<> (this.categoryRepository.findAll());
 	}
@@ -44,6 +94,6 @@ public class CatagoryServiceImpl implements CategoryService {
 	public void delete(Long categoryId) {
 		this.categoryRepository.deleteById(categoryId);
 		
-	}
+	}*/
 
 }

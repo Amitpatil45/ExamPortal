@@ -10,7 +10,6 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long quesId;
     private  String content;
-    private  String image;
     private  String option1;
     private  String option2;
     private  String option3;
@@ -19,22 +18,20 @@ public class Question {
     private  String answer;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private  Quiz quiz;
+    @ManyToOne()
+    private  Category category;
 
-    public Question(long quesId, String content, String image, String option1, String option2, String option3, String option4, String answer, Quiz quiz) {
-        this.quesId = quesId;
-        this.content = content;
-        this.image = image;
-        this.option1 = option1;
-        this.option2 = option2;
-        this.option3 = option3;
-        this.option4 = option4;
-        this.answer = answer;
-        this.quiz = quiz;
-    }
+ 
 
-    public Question() {
+    public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Question() {
     }
 
     public long getQuesId() {
@@ -53,13 +50,7 @@ public class Question {
         this.content = content;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
+   
 
     public String getOption1() {
         return option1;
@@ -101,11 +92,5 @@ public class Question {
         this.answer = answer;
     }
 
-    public Quiz getQuiz() {
-        return quiz;
-    }
-
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
-    }
+   
 }

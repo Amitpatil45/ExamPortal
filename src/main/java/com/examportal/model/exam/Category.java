@@ -1,7 +1,8 @@
 package com.examportal.model.exam;
-import java.util.*;
-import javax.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Category {
@@ -12,13 +13,19 @@ public class Category {
 	private String title;
 
 	private String description;
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-	@JsonIgnore
-	private Set<Quiz> quizzes = new LinkedHashSet<>();
+
+	private Boolean isActive=true;
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
 
 	public Category() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Category(String title, String description) {
@@ -51,4 +58,7 @@ public class Category {
 		this.description = description;
 	}
 
+	
+
+	
 }

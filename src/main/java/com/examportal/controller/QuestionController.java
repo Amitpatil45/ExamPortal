@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.examportal.model.exam.Question;
@@ -35,10 +37,18 @@ public class QuestionController {
 	
 	//add
 	@PostMapping("/")
-	public ResponseEntity<Question> add(@RequestBody Question question){
+	public ResponseEntity<Question> add(@RequestBody Question question) throws Exception{
 		return ResponseEntity.ok(questionService.addQuestion(question));
 		
 	}
+	
+	/*@GetMapping("/")
+	Page<Question> getAllQuestion(
+			@RequestParam (defaultValue = o) int page,
+			@RequestParam (defaultValue = 20)){
+		return null;
+		
+	}*/
 	
 	//update
 	@PutMapping("/")
@@ -47,7 +57,7 @@ public class QuestionController {
 	}
 	
 	//get
-	@GetMapping("/quiz/{qid}")
+	/*@GetMapping("/quiz/{qid}")
 	public ResponseEntity<?> questionsofquiz(@PathVariable ("qid") Long qid){
 		Quiz quiz = quizService.getQuiz(qid);
 		Set<Question> questions = quiz.getQuestions();
@@ -59,7 +69,7 @@ public class QuestionController {
 		
 		return ResponseEntity.ok(list);
 		
-	}
+	}*/
 	
 	@GetMapping("/{qid}")
 	
@@ -68,8 +78,5 @@ public class QuestionController {
 		
 	}
 	
-	@DeleteMapping("/{qid}")
-	public void delete(@PathVariable("qid") Long qid) {
-		questionService.deleteQuestion(qid);
-	}
+	
 }

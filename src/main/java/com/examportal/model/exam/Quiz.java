@@ -10,27 +10,22 @@ public class Quiz {
 	    @GeneratedValue(strategy = GenerationType.AUTO)
 	    private  long qid;
 	    private  String title;
-	    
-	    @Column(length = 5000)
 	    private  String description;
-	    private  boolean active=false;
-	    private String maxMarks;
-	    private  String noOfQuestions;
+	    private  boolean active=true;
 	    
-	    @ManyToOne(fetch = FetchType.EAGER)
+	    @ManyToOne
 	    private  Category category; 
 	    
+	  
+	    @OneToMany
 	    
+	    private List<Question>questions =new ArrayList();
 
-	    @OneToMany(mappedBy = "quiz",cascade = CascadeType.ALL)
-	    @JsonIgnore
-	    private Set<Question>questions =new HashSet<>();
-
-		public Set<Question> getQuestions() {
+		public List<Question> getQuestions() {
 			return questions;
 		}
 
-		public void setQuestions(Set<Question> questions) {
+		public void setQuestions(List<Question> questions) {
 			this.questions = questions;
 		}
 
@@ -39,16 +34,7 @@ public class Quiz {
 			// TODO Auto-generated constructor stub
 		}
 
-		public Quiz(String title, String description, boolean active, String maxMarks, String noOfQuestions,
-				Category category) {
-			super();
-			this.title = title;
-			this.description = description;
-			this.active = active;
-			this.maxMarks = maxMarks;
-			this.noOfQuestions = noOfQuestions;
-			this.category = category;
-		}
+	
 
 		public long getQid() {
 			return qid;
@@ -82,21 +68,7 @@ public class Quiz {
 			this.active = active;
 		}
 
-		public String getMaxMarks() {
-			return maxMarks;
-		}
-
-		public void setMaxMarks(String maxMarks) {
-			this.maxMarks = maxMarks;
-		}
-
-		public String getNoOfQuestions() {
-			return noOfQuestions;
-		}
-
-		public void setNoOfQuestions(String noOfQuestions) {
-			this.noOfQuestions = noOfQuestions;
-		}
+	
 
 		public Category getCategory() {
 			return category;
