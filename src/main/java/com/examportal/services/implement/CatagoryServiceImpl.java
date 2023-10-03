@@ -7,6 +7,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.examportal.exception.DataValidationException;
+import com.examportal.exception.GenericResponse;
 import com.examportal.model.exam.Category;
 import com.examportal.repo.CategoryRepository;
 import com.examportal.services.CategoryService;
@@ -18,25 +20,27 @@ public class CatagoryServiceImpl implements CategoryService {
 	
 
 	@Override
-	public Category addCategory(Category category) throws Exception {
+	public GenericResponse addCategory(Category category) throws Exception {
 		if(category.getTitle() == null) {
-			throw new Exception("Please enter Tital");
+			throw new DataValidationException("please fill title");
 		}
 		
 		else if (category.getIsActive() == null) {
-			throw new Exception("Active it");
+			throw new DataValidationException("please give permission Active or Deactive ");
 		}
 		else {
+			categoryRepository.save(category );
 			
+			return new GenericResponse(201, "Created Succesfully") ;
 		}
-		
 	
-		return categoryRepository.save(category );
 	}
 
 	@Override
-	public Category updateCategory(Category category) {
-		return categoryRepository.save(category);
+	public GenericResponse updateCategory(Category category) {
+		categoryRepository.save(category);
+		
+		return new GenericResponse(202, "Updated Succesfully") ;
 	}
 	@Override
 	public Page<Category> getCategories(int page, int size) {
@@ -56,7 +60,7 @@ public class CatagoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Category updateStatus() {
+	public GenericResponse updateStatus() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,6 +1,8 @@
 package com.examportal.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.examportal.exception.GenericResponse;
 import com.examportal.model.exam.Quiz;
 import com.examportal.services.QuizService;
 
@@ -25,24 +29,33 @@ public class QuizController {
 
 	// add
 	@PostMapping("/")
-	public ResponseEntity<Quiz> add(@RequestBody Quiz quiz) {
-		return ResponseEntity.ok(quizService.addQuiz(quiz));
+	public ResponseEntity<GenericResponse> add(@RequestBody Quiz quiz) throws Exception {
+		GenericResponse response = quizService.addQuiz(quiz);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 
 	}
 
 	// update
 	@PutMapping("/")
-	public ResponseEntity<Quiz> update(@RequestBody Quiz quiz) {
-		return ResponseEntity.ok(quizService.updateQuiz(quiz));
+	public ResponseEntity<GenericResponse> update(@RequestBody Quiz quiz) {
+		GenericResponse response = quizService.updateQuiz(quiz);
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
 	}
 
 	// get
 	@GetMapping("/")
-	public ResponseEntity<?> quizzes() {
-		return ResponseEntity.ok(quizService.getQuizzes());
-
+	public Page<Quiz> getAllQuizes(@RequestParam (defaultValue = "0") int page,
+			@RequestParam (defaultValue = "25") int size){
+		return quizService.getQuizzes(page, size);
+		
 	}
+	
+	
+	/*public ResponseEntity<?> quizzes() {
+		return ResponseEntity.ok(quizService.getQuizzes(0, 0));
+
+	}*/
 
 	@GetMapping("/{qid}")
 	public Quiz quiz(@PathVariable("qid") Long qid) {
@@ -50,9 +63,6 @@ public class QuizController {
 
 	}
 
-	@DeleteMapping("/{qid}")
-	public void delete(@PathVariable("qid") Long qid) {
-		quizService.deleteQuiz(qid);
-	}
+	
 
 }

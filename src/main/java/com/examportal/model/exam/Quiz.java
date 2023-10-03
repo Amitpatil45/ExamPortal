@@ -6,77 +6,71 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Quiz {
-	   @Id
-	    @GeneratedValue(strategy = GenerationType.AUTO)
-	    private  long qid;
-	    private  String title;
-	    private  String description;
-	    private  boolean active=true;
-	    
-	    @ManyToOne
-	    private  Category category; 
-	    
-	  
-	    @OneToMany
-	    
-	    private List<Question>questions =new ArrayList();
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private String title;
+	private String description;
+	private boolean isActive=true;
 
-		public List<Question> getQuestions() {
-			return questions;
-		}
+	@ManyToOne
+	private Category category;
 
-		public void setQuestions(List<Question> questions) {
-			this.questions = questions;
-		}
+	@OneToMany
+	private List<Question> questions;
 
-		public Quiz() {
-			super();
-			// TODO Auto-generated constructor stub
-		}
+	public List<Question> getQuestions() {
+		return questions;
+	}
 
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
+	}
+
+	public Quiz() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public long getQid() {
+		return id;
+	}
+
+	public void setQid(long qid) {
+		this.id = qid;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 	
 
-		public long getQid() {
-			return qid;
-		}
-
-		public void setQid(long qid) {
-			this.qid = qid;
-		}
-
-		public String getTitle() {
-			return title;
-		}
-
-		public void setTitle(String title) {
-			this.title = title;
-		}
-
-		public String getDescription() {
-			return description;
-		}
-
-		public void setDescription(String description) {
-			this.description = description;
-		}
-
-		public boolean isActive() {
-			return active;
-		}
-
-		public void setActive(boolean active) {
-			this.active = active;
-		}
-
-	
-
-		public Category getCategory() {
-			return category;
-		}
-
-		public void setCategory(Category category) {
-			this.category = category;
-		}
-	    
-	
 }

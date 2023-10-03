@@ -2,6 +2,7 @@ package com.examportal.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.examportal.exception.GenericResponse;
 import com.examportal.model.exam.Category;
 import com.examportal.services.CategoryService;
 
@@ -26,13 +28,11 @@ public class CategoryController {
 
 	// add
 	@PostMapping("/")
-	public ResponseEntity<Category> addcategory(@RequestBody Category category) throws Exception {
-		Category category1 = categoryService.addCategory(category);
-		return ResponseEntity.ok(category1);
+	public ResponseEntity<GenericResponse> addcategory(@RequestBody Category category) throws Exception {
+		GenericResponse response = categoryService.addCategory(category);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 
 	}
-
-	// get
 
 	@GetMapping("/{categoryId}")
 	public Category category(@PathVariable("categoryId") Long categoryId) {
@@ -40,26 +40,18 @@ public class CategoryController {
 
 	}
 
-	/*@GetMapping("/")
-	public ResponseEntity<?> getCategories() {
-		return ResponseEntity.ok(categoryService.getCategories(1,5));
 
-	}*/
-	
-	@GetMapping("/all-categories")
-	public Page<Category> getAllCategories(
-			@RequestParam (defaultValue = "0") int page,
-			@RequestParam (defaultValue = "20") int size){
+	@GetMapping("/")
+	public Page<Category> getAllCategories(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "20") int size) {
 		return categoryService.getCategories(page, size);
 	}
 
 	// update
 	@PutMapping("/")
-	public Category updateCategory(@RequestBody Category category) {
-		return categoryService.updateCategory(category);
-
+	public ResponseEntity<GenericResponse> updateCategory(@RequestBody Category category) {
+		GenericResponse response = categoryService.updateCategory(category);
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
-
-	
 
 }

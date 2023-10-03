@@ -2,6 +2,7 @@ package com.examportal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 public class EamPortalApplication {
@@ -10,3 +11,4 @@ public class EamPortalApplication {
 		  System.out.println("Project Running");
 	}
 }
+	

@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long cid;
+	private Long id;
 
 	private String title;
 
@@ -35,11 +35,11 @@ public class Category {
 	}
 
 	public long getCid() {
-		return cid;
+		return id;
 	}
 
 	public void setCid(long cid) {
-		this.cid = cid;
+		this.id = cid;
 	}
 
 	public String getTitle() {
