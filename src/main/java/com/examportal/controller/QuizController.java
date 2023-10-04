@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.examportal.exception.GenericResponse;
@@ -34,11 +35,13 @@ public class QuizController {
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 
 	}
-
+	
+	
 	// update
-	@PutMapping("/")
-	public ResponseEntity<GenericResponse> update(@RequestBody Quiz quiz) {
-		GenericResponse response = quizService.updateQuiz(quiz);
+	@PutMapping("/{quizId}")
+	public ResponseEntity<GenericResponse> update(@RequestBody Quiz quiz,
+			@PathVariable ("quizId") int quizId) {
+		GenericResponse response = quizService.updateQuiz(quiz ,quizId);
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
 	}

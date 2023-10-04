@@ -9,12 +9,10 @@ public interface QuestionService {
 
 	public GenericResponse addQuestion(Question question) throws Exception;
 
-	public GenericResponse updateQuestion(Question question);
+	public GenericResponse updateQuestion(Question question , int questionId);
 
 	public Page<Question> getQuestions(int page, int size);
 
 	public Question getQuestion(Long questionId);
-
-	// public Set<Question> getQuestionOfQuiz(Quiz quiz);
 
 }

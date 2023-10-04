@@ -1,8 +1,16 @@
 package com.examportal.model.exam;
 
-import java.util.*;
-import javax.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Quiz {
@@ -13,10 +21,19 @@ public class Quiz {
 	private String description;
 	private boolean isActive=true;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	@ManyToOne
+	@JsonIgnoreProperties(value = {"description","isActive"})
 	private Category category;
 
-	@OneToMany
+	@ManyToMany
 	private List<Question> questions;
 
 	public List<Question> getQuestions() {

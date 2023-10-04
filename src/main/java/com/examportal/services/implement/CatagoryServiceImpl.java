@@ -1,6 +1,10 @@
 package com.examportal.services.implement;
 
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +25,7 @@ public class CatagoryServiceImpl implements CategoryService {
 
 	@Override
 	public GenericResponse addCategory(Category category) throws Exception {
-		if(category.getTitle() == null) {
+		if(category.getTitle() == null ) {
 			throw new DataValidationException("please fill title");
 		}
 		
@@ -37,7 +41,8 @@ public class CatagoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public GenericResponse updateCategory(Category category) {
+	public GenericResponse updateCategory(Category category, int cid) {
+		category.setCid(cid);
 		categoryRepository.save(category);
 		
 		return new GenericResponse(202, "Updated Succesfully") ;
@@ -65,10 +70,14 @@ public class CatagoryServiceImpl implements CategoryService {
 		return null;
 	}
 
-	
-
-	
-	
+	@Override
+	public List<Category> getallcategories(Category category) {
+		if (category.getIsActive() == true) {
+			return categoryRepository.findAll();
+			
+		}
+		return null;
+	}
 
 	/*@Override
 	public Category addCategory(Category category) {

@@ -1,5 +1,7 @@
 package com.examportal.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -48,10 +50,22 @@ public class CategoryController {
 	}
 
 	// update
-	@PutMapping("/")
-	public ResponseEntity<GenericResponse> updateCategory(@RequestBody Category category) {
-		GenericResponse response = categoryService.updateCategory(category);
+	@PutMapping("/{cid}")
+	public ResponseEntity<GenericResponse> updateCategory(@RequestBody Category category,
+			@PathVariable("cid") int cid) {
+		GenericResponse response = categoryService.updateCategory(category, cid);
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
-
+	
+	//list
+	@GetMapping("/list")	
+	public ResponseEntity<List<Category>> allListOfCategory(){
+		Category category = new Category();
+		List<Category> list = categoryService.getallcategories(category);
+		return ResponseEntity.status(HttpStatus.FOUND).body(list);
+		
+		//Category category = (Category) categoryService.getallcategories(null);
+		//return (List<Category>) category;
+		
+	}
 }

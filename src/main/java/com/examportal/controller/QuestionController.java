@@ -41,9 +41,10 @@ public class QuestionController {
 	}
 
 	// update
-	@PutMapping("/")
-	public ResponseEntity<GenericResponse> update(@RequestBody Question question) {
-		GenericResponse response = questionService.updateQuestion(question);
+	@PutMapping("/{questionId}")
+	public ResponseEntity<GenericResponse> update(@RequestBody Question question,
+			@PathVariable("questionId") int questionId) {
+		GenericResponse response = questionService.updateQuestion(question , questionId);
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 

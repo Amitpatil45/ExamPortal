@@ -2,12 +2,18 @@ package com.examportal.model.exam;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 @Entity
 public class Question {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
 	private String content;
 	private String option1;
 	private String option2;
@@ -17,6 +23,7 @@ public class Question {
 	private String answer;
 
 	@ManyToOne()
+	@JsonIgnoreProperties(value = {"description","isActive"})
 	private Category category;
 
 	public Category getCategory() {
@@ -85,5 +92,6 @@ public class Question {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
+	
 
 }

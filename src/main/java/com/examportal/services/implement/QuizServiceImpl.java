@@ -28,15 +28,15 @@ public class QuizServiceImpl implements QuizService {
 		} else if (quiz.getCategory() == null) {
 			throw new DataValidationException("Please Fill the Category");
 
-		} else {
-			quizRepository.save(quiz);
-			return new GenericResponse(201, "Created Succesfully");
 		}
-		
+		quizRepository.save(quiz);
+		return new GenericResponse(201, "Created Succesfully");
+
 	}
 
 	@Override
-	public GenericResponse updateQuiz(Quiz quiz) {
+	public GenericResponse updateQuiz(Quiz quiz , int quizId) {
+		quiz.setQid(quizId);
 		quizRepository.save(quiz);
 		return new GenericResponse(202, "Updated Succesfully");
 	}
@@ -55,10 +55,16 @@ public class QuizServiceImpl implements QuizService {
 	public Quiz getQuiz(Long quizId) {
 		return this.quizRepository.findById(quizId).get();
 	}
-	
-	
-	
-	
+
+	@Override
+	public List<Quiz> getAllQuizzes() {
+		Quiz quiz = new Quiz();
+		if (quiz.isActive() == true) {
+			return new ArrayList<Quiz>(quizRepository.findAll());
+			
+		}
+		return null;
+	}
 	
 	
 
@@ -81,7 +87,7 @@ public class QuizServiceImpl implements QuizService {
 	 * @Override public Set<Quiz> getQuizzes() { return new LinkedHashSet<>(
 	 * this.quizRepository.findAll()); }
 	 * 
-	 * @Override public Quiz getQuiz(Long quizId) {  }
+	 * @Override public Quiz getQuiz(Long quizId) { }
 	 * 
 	 * 
 	 * 
