@@ -1,11 +1,12 @@
 package com.examportal.model.exam;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 @Entity
 public class Question {
@@ -20,7 +21,25 @@ public class Question {
 	private String option3;
 	private String option4;
 
-	private String answer;
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public CorrectOption getCorrectOption() {
+		return correctOption;
+	}
+
+	public void setCorrectOption(CorrectOption correctOption) {
+		this.correctOption = correctOption;
+	}
+
+	private CorrectOption correctOption;
 
 	@ManyToOne()
 	@JsonIgnoreProperties(value = {"description","isActive"})
@@ -84,14 +103,5 @@ public class Question {
 	public void setOption4(String option4) {
 		this.option4 = option4;
 	}
-
-	public String getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(String answer) {
-		this.answer = answer;
-	}
-	
 
 }

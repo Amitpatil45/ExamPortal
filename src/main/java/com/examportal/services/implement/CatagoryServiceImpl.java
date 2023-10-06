@@ -1,8 +1,6 @@
 package com.examportal.services.implement;
 
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +70,7 @@ public class CatagoryServiceImpl implements CategoryService {
 
 	@Override
 	public List<Category> getallcategories(Category category) {
-		if (category.getIsActive() == true) {
+		if (category.getIsActive() ) {
 			return categoryRepository.findAll();
 			
 		}

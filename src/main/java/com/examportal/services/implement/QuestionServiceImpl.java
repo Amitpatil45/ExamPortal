@@ -1,9 +1,6 @@
 package com.examportal.services.implement;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.Column;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,8 +14,6 @@ import com.examportal.model.exam.Question;
 import com.examportal.repo.QuestionRepository;
 import com.examportal.services.QuestionService;
 
-import net.bytebuddy.implementation.bind.MethodDelegationBinder.BindingResolver.Unique;
-
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
@@ -27,74 +22,87 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public GenericResponse addQuestion(Question question) throws Exception {
+
 		if (question.getContent() == null || question.getContent().isBlank()) {
-			throw new DataValidationException("Enter Correct Question");
-			
-		} 
-		
-		System.out.println(question.getOption1());
-		if (question.getOption1() == null || question.getOption1().isBlank()) {
-			
-			throw new DataValidationException("Enter Correct opition 1");
+			throw new DataValidationException("Enter  Question !!");
 
-		}  if (question.getOption2() == null || question.getOption2().isBlank()) {
-			throw new DataValidationException("Enter  opition 2");
+		}
 
-		}  if (question.getOption3() == null || question.getOption3().isBlank()) {
-			throw new DataValidationException("Enter  opition 3");
+		if (question.getOption1() == null || question.getOption1().isBlank() || question.getOption2() == null
+				|| question.getOption2().isBlank() || question.getOption3() == null || question.getOption3().isBlank()
+				|| question.getOption4() == null || question.getOption4().isBlank()) {
+			throw new DataValidationException("Enter  Option ");
 
-		}  if (question.getOption4() == null || question.getOption4().isBlank()) {
-			throw new DataValidationException("Enter  opition 4");
+		}
 
-		}  if (question.getAnswer() == null || question.getAnswer().isBlank()) {
-			throw new DataValidationException("Enter  Answer");
+		/*if (question.getAnswer() == null || question.getAnswer().isBlank()) {
+			throw new DataValidationException("Enter  Answer !!");
 
-		}  if (question.getCategory() == null ) {
+		}*/
+
+		if (question.getCategory() == null) {
 			throw new DataValidationException("Enter category");
-		}  /*if (question.getCategory().getCid()) {
-			throw new DataValidationException("Enter Category");
+		}
+
+	
+		
+		
+		
+
+		if (!questionUnique(question)) {
+			throw new DataValidationException("Question is Already present");
+
+		}
+		if (!optionunique(question)) {
+			throw new DataValidationException("options are same!!");
+		}
+		/*if (!answerunique(question)) {
+			throw new DataValidationException("Answer is not present in option !!");
 		}*/
-		
-		
-		
-		
-		
-		
-		
-		if(question.getOption1() == question.getOption2() || question.getOption1() == question.getOption3() || question.getOption1() == question.getOption4()){
-			throw new DataValidationException("Options Are Same");
-		}
-		if(question.getOption2() == question.getOption4() || question.getOption2() == question.getOption3()){
-			throw new DataValidationException("Options Are Same");
-		}
-		if( question.getOption3() == question.getOption4()){
-			throw new DataValidationException("Options Are Same");
-		}
-		
-		
-		
-		
-		/*if(question.getAnswer() == question.getOption1() ||
-				question.getAnswer() == question.getOption2() ||
-				question.getAnswer() == question.getOption3() ||
-				question.getAnswer() == question.getOption4()) {
-			questionRepository.save(question);
-			return new GenericResponse(201, "Created Succesfully!!");
-		}*/
-		
-		
-		
-		
-			questionRepository.save(question);
-			return new GenericResponse(201, "Created Succesfully!!");
-		
+
+		/*
+		 * if (question.getCategory().getCid()) { throw new
+		 * DataValidationException("Enter Category"); }
+		 */
+
+		questionRepository.save(question);
+		return new GenericResponse(201, "Created Succesfully!!");
 
 	}
+
+	private Boolean questionUnique(Question question1) {
+
+		Optional<Question> questionOptional = questionRepository.findByContent(question1.getContent());
+		System.out.println(questionOptional);
+		if (questionOptional.isPresent()) {
+			return false;
+		}
+
+		return true;
+
+	}
+
+	private Boolean optionunique(Question question) {
+		return !(question.getOption1().equals(question.getOption2())
+				|| question.getOption1().equals(question.getOption3())
+				|| question.getOption1().equals(question.getOption4())
+				|| question.getOption2().equals(question.getOption3())
+				|| question.getOption2().equals(question.getOption4())
+				|| question.getOption3().equals(question.getOption4()));
+
+	}
+
+	/*private Boolean answerunique(Question question) {
+		return question.getAnswer().equals(question.getOption1()) || question.getAnswer().equals(question.getOption2())
+				|| question.getAnswer().equals(question.getOption3())
+				|| question.getAnswer().equals(question.getOption4());
+
+	}*/
 
 	@Override
 	public GenericResponse updateQuestion(Question question, int questionId) {
 		question.setQuesId(questionId);
-		this.questionRepository.save(question );
+		this.questionRepository.save(question);
 		return new GenericResponse(202, "Updated Succesfully!!");
 	}
 
@@ -112,10 +120,6 @@ public class QuestionServiceImpl implements QuestionService {
 	public Question getQuestion(Long questionId) {
 		return this.questionRepository.findById(questionId).get();
 	}
-
-
-
-	
 
 	/*
 	 * @Override public Set<Question> getQuestionOfQuiz(Quiz quiz) { return
