@@ -79,11 +79,11 @@ public class QuizController {
 	
 	@GetMapping("/play/{quizId}")
     public ResponseEntity<QuizDto> playQuiz(@PathVariable Long quizId) {
-        // Retrieve the quiz by its ID (you should have a QuizService for this)
+        
         Quiz quiz = quizServiceImpl.getQuiz(quizId);
 
         if (quiz != null) {
-            // Convert the quiz and its questions to DTOs
+            
             QuizDto quizDto = quizServiceImpl.convertQuizToQuizDto(quiz);
             return new ResponseEntity<>(quizDto, HttpStatus.OK);
         } else {
