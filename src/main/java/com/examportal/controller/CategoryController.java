@@ -1,6 +1,7 @@
 package com.examportal.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,14 +55,28 @@ public class CategoryController {
 	public ResponseEntity<GenericResponse> updateCategory(@RequestBody Category category,
 			@PathVariable("cid") int cid) {
 		GenericResponse response = categoryService.updateCategory(category, cid);
-		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);		
+	}
+	
+	
+	@PutMapping("/status/{cid}")
+	public ResponseEntity<GenericResponse> updateStatus(
+	        @PathVariable("cid") long cid,
+	        @RequestBody Map<String, Boolean> requestBody) {
+	    Boolean newStatus = requestBody.get("isActive");
+	    if (newStatus != null) {
+	        GenericResponse response = categoryService.changeCategoryStatus(cid, newStatus);
+	        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	    } else {
+	        return new ResponseEntity<>(new GenericResponse(400, "The 'isActive' field is missing "), HttpStatus.BAD_REQUEST);
+	    }
+
 	}
 	
 	//list
 	@GetMapping("/list")	
 	public ResponseEntity<List<Category>> allListOfCategory(){
-		Category category = new Category();
-		List<Category> list = categoryService.getallcategories(category);
+		List<Category> list = categoryService.getActiveCategories();
 		return ResponseEntity.status(HttpStatus.FOUND).body(list);
 		
 		//Category category = (Category) categoryService.getallcategories(null);

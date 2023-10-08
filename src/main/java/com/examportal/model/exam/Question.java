@@ -1,5 +1,6 @@
 package com.examportal.model.exam;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,54 +15,25 @@ public class Question {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	private String content;
 	private String option1;
 	private String option2;
 	private String option3;
 	private String option4;
 
-	
-	
+	private CorrectOption correctOption;
+
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JsonIgnoreProperties(value = { "description", "isActive" })
+	private Category category;
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public CorrectOption getCorrectOption() {
-		return correctOption;
-	}
-
-	public void setCorrectOption(CorrectOption correctOption) {
-		this.correctOption = correctOption;
-	}
-
-	private CorrectOption correctOption;
-
-	@ManyToOne()
-	@JsonIgnoreProperties(value = {"description","isActive"})
-	private Category category;
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public Question() {
-	}
-
-	public long getQuesId() {
-		return id;
-	}
-
-	public void setQuesId(long quesId) {
-		this.id = quesId;
 	}
 
 	public String getContent() {
@@ -104,4 +76,41 @@ public class Question {
 		this.option4 = option4;
 	}
 
+	public CorrectOption getCorrectOption() {
+		return correctOption;
+	}
+
+	public void setCorrectOption(CorrectOption correctOption) {
+		this.correctOption = correctOption;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public void setOption1(CorrectOption a) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setOption2(CorrectOption b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setOption3(CorrectOption c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setOption4(CorrectOption d) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }

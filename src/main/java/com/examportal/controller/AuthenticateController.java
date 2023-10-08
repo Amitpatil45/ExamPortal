@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,7 @@ public class AuthenticateController {
 	public ResponseEntity<?> generateToken(@RequestBody JWTRequest jwtRequest) throws Exception {
 
 		try {
-			org.springframework.security.core.Authentication authentication = authenticationManager.authenticate(
+			Authentication authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(), jwtRequest.getPassword()));
 			User user = (User) authentication.getPrincipal();
 			String token = jwtutils.generateToken(user);

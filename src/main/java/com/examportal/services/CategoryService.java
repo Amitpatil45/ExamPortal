@@ -7,21 +7,17 @@ import org.springframework.data.domain.Page;
 import com.examportal.exception.GenericResponse;
 import com.examportal.model.exam.Category;
 
-
 public interface CategoryService {
 	public GenericResponse addCategory(Category category) throws Exception;
 
-	public GenericResponse updateCategory(Category category, int cid);
-
+	public GenericResponse updateCategory(Category category, long cid);
 
 	public Category getCategory(Long categoryId);
 
-	public GenericResponse updateStatus();
-
 	Page<Category> getCategories(int page, int size);
+
+	GenericResponse changeCategoryStatus(Long categoryId, Boolean newStatus);
 	
-	List<Category> getallcategories(Category category);
-
-
+	List<Category> getActiveCategories();
 
 }

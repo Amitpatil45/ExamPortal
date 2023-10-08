@@ -1,4 +1,5 @@
 package com.examportal.model.exam;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,32 +15,14 @@ public class Category {
 
 	private String description;
 
-	private Boolean isActive=true;
+	private Boolean isActive = true;
 
-	public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	public Category() {
-		super();
-	}
-
-	public Category(String title, String description) {
-		super();
-		this.title = title;
-		this.description = description;
-	}
-
-	public long getCid() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setCid(long cid) {
-		this.id = cid;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getTitle() {
@@ -58,7 +41,12 @@ public class Category {
 		this.description = description;
 	}
 
-	
+	public Boolean getIsActive() {
+		return isActive;
+	}
 
-	
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
 }

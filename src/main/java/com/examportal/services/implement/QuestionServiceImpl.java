@@ -1,5 +1,6 @@
 package com.examportal.services.implement;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.examportal.exception.DataValidationException;
 import com.examportal.exception.GenericResponse;
+import com.examportal.model.exam.CorrectOption;
 import com.examportal.model.exam.Question;
 import com.examportal.repo.QuestionRepository;
 import com.examportal.services.QuestionService;
@@ -28,27 +30,34 @@ public class QuestionServiceImpl implements QuestionService {
 
 		}
 
-		if (question.getOption1() == null || question.getOption1().isBlank() || question.getOption2() == null
-				|| question.getOption2().isBlank() || question.getOption3() == null || question.getOption3().isBlank()
-				|| question.getOption4() == null || question.getOption4().isBlank()) {
+		if (question.getOption1() != null || question.getOption1().isBlank()) {
+			question.setOption1(CorrectOption.A);
+		}
+
+		if (question.getOption2() != null || question.getOption2().isBlank()) {
+			question.setOption2(CorrectOption.B);
+		}
+		if (question.getOption3() != null || question.getOption3().isBlank()) {
+			question.setOption3(CorrectOption.C);
+		}
+
+		if (question.getOption4() != null || question.getOption4().isBlank()) {
+			question.setOption4(CorrectOption.D);
+		}
+
+		if (question.getOption1() == null || question.getOption2() == null || question.getOption3() == null
+				|| question.getOption4() == null) {
 			throw new DataValidationException("Enter  Option ");
 
 		}
 
-		/*if (question.getAnswer() == null || question.getAnswer().isBlank()) {
-			throw new DataValidationException("Enter  Answer !!");
-
-		}*/
-
-		if (question.getCategory() == null) {
+		if (question.getCategory() == null ) {
 			throw new DataValidationException("Enter category");
 		}
-
+		
+		
+		trimquestion(question);
 	
-		
-		
-		
-
 		if (!questionUnique(question)) {
 			throw new DataValidationException("Question is Already present");
 
@@ -56,17 +65,28 @@ public class QuestionServiceImpl implements QuestionService {
 		if (!optionunique(question)) {
 			throw new DataValidationException("options are same!!");
 		}
-		/*if (!answerunique(question)) {
-			throw new DataValidationException("Answer is not present in option !!");
-		}*/
-
-		/*
-		 * if (question.getCategory().getCid()) { throw new
-		 * DataValidationException("Enter Category"); }
-		 */
 
 		questionRepository.save(question);
 		return new GenericResponse(201, "Created Succesfully!!");
+
+	}
+
+	private void trimquestion(Question question) {
+		if (question.getContent() != null) {
+			question.setContent(question.getContent().trim());
+		}
+		if (question.getOption1() != null) {
+			question.setOption1(question.getOption1().trim());
+		}
+		if (question.getOption2() != null) {
+			question.setOption2(question.getOption2().trim());
+		}
+		if (question.getOption3() != null) {
+			question.setOption3(question.getOption3().trim());
+		}
+		if (question.getOption4() != null) {
+			question.setOption4(question.getOption4().trim());
+		}
 
 	}
 
@@ -92,16 +112,9 @@ public class QuestionServiceImpl implements QuestionService {
 
 	}
 
-	/*private Boolean answerunique(Question question) {
-		return question.getAnswer().equals(question.getOption1()) || question.getAnswer().equals(question.getOption2())
-				|| question.getAnswer().equals(question.getOption3())
-				|| question.getAnswer().equals(question.getOption4());
-
-	}*/
-
 	@Override
 	public GenericResponse updateQuestion(Question question, int questionId) {
-		question.setQuesId(questionId);
+		question.setId((long) questionId);
 		this.questionRepository.save(question);
 		return new GenericResponse(202, "Updated Succesfully!!");
 	}
